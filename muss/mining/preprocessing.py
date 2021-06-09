@@ -99,7 +99,7 @@ def get_subshard_paths(raw_original_dir):
 
 
 def get_sentences_paths(dataset_dir):
-    return list(sorted((dataset_dir / 'sentences').glob('*.txt.gz')))
+    return list(sorted((dataset_dir / 'sentences').glob('*.txt')))
 
 
 def get_n_cells(n_total_samples):
