@@ -6,3 +6,5 @@
 .nfs*
 experiments
 ts-notebooks
+
+resources/tools/LASER/

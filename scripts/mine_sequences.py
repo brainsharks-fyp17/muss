@@ -36,12 +36,13 @@ from muss.mining.nn_search import (
 )
 from muss.mining.filtering import SimplicityScorer
 
-ccnet_dir = Path(
-    input(
-        'Please download the CCNet corpus from https://github.com/facebookresearch/cc_net and enter the path to the downloaded data: '
-    )
-)
-language = input('What language do you want to process? (en/fr/es): ')
+# ccnet_dir = Path(
+#     input(
+#         'Please download the CCNet corpus from https://github.com/facebookresearch/cc_net and enter the path to the downloaded data: '
+#     )
+# )
+# language = input('What language do you want to process? (en/fr/es): ')
+language = "si"
 cluster = 'local'
 dataset_dir = get_dataset_dir('uts') / language
 print(dataset_dir)
