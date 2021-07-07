@@ -1,4 +1,4 @@
-
+import sys
 from os import listdir
 from os.path import isfile, join, isdir
 import gc
@@ -14,8 +14,14 @@ def getAllFilesRecursive(root):
     return files
 
 lst_file = getAllFilesRecursive('content/sinhala-dataset-creation/datasets/tokenized')
+if sys.argv[1]:
+    limit = int(sys.argv[1])
+    print(sys.argv[1])
+else:
+    print("no arg provided")
+    limit = len(lst_file)
 all_data = open("resources/datasets/uts/si/sentences/all_data.txt","w")
-for i in range(len(lst_file)):
+for i in range(limit):
     f = open(lst_file[i])
     data = f.readlines()
     for line in data:
