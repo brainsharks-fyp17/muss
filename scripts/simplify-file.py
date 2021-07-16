@@ -14,6 +14,8 @@ if __name__ == '__main__':
         choices=ALLOWED_MODEL_NAMES,
         help=f'Model name to generate from. Models selected with the highest validation SARI score.',
     )
+
+    outfile = open('en_simp_inf.txt','w')
     args = parser.parse_args()
     source_sentences = read_lines(args.filepath)
     pred_sentences = simplify_sentences(source_sentences, model_name=args.model_name)
