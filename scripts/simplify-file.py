@@ -17,6 +17,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
     source_sentences = read_lines(args.filepath)
     pred_sentences = simplify_sentences(source_sentences, model_name=args.model_name)
-    outfile = open('content/en_simp_inf.txt','w')
+    outfile = open('en_simp_inf.txt','w')
     for c, s in zip(source_sentences, pred_sentences):
         outfile.write('%s \n' % s)
