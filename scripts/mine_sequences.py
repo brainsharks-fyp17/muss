@@ -43,7 +43,7 @@ print(dataset_dir)
 
 # For large jobs only
 slurm_partition = 'dev,scavenge'
-slurm_array_parallelism = 32
+slurm_array_parallelism = 512
 
 embeddings_type_name = f'laser_{language}'
 get_embeddings = lambda sentences: get_laser_embeddings(
