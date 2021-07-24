@@ -36,65 +36,14 @@ from muss.mining.nn_search import (
 )
 from muss.mining.filtering import SimplicityScorer
 
-# ccnet_dir = Path(
-#     input(
-#         'Please download the CCNet corpus from https://github.com/facebookresearch/cc_net and enter the path to the downloaded data: '
-#     )
-# )
-# language = input('What language do you want to process? (en/fr/es): ')
-language = "si"
+language = 'si'
 cluster = 'local'
 dataset_dir = get_dataset_dir('uts') / language
 print(dataset_dir)
+
 # For large jobs only
 slurm_partition = 'dev,scavenge'
-slurm_array_parallelism = 1024
-
-# Split CCNet shards into subshards
-# with log_action('Splitting CCNet shards into smaller subshards'):
-#     # We need to split each shard even more for the LASER embeddings to fit in memory
-#     n_shards = {  # Number of shards to take for each languages for ~1B sentences
-#         'en': 15,
-#         'fr': 25,
-#         'es': 13,  # We would need about 20 shards for 1B sentences, but there are only 13
-#     }[language]
-#     ccnet_filepaths = [ccnet_dir / f'{language}_head_{i:04d}.json.gz' for i in range(n_shards)]
-#     raw_original_dir = dataset_dir / 'raw_original'
-#     raw_original_dir.mkdir(exist_ok=True, parents=True)
-#     output_dirs = [raw_original_dir / f'{language}_head_{i:04d}' for i in range(n_shards)]
-#     n_docs_per_file = 50000
-#     executor = get_executor(cluster=cluster, slurm_partition='dev', timeout_min=1 * 30, slurm_array_parallelism=16)
-#     jobs = []
-#     with executor.batch():
-#         for ccnet_filepath, output_dir in zip(ccnet_filepaths, output_dirs):
-#             if output_dir.exists():
-#                 continue
-#             job = executor.submit(split_ccnet_shard, ccnet_filepath, output_dir, n_docs_per_file)
-#             jobs.append(job)
-#     print([job.job_id for job in jobs])
-#     [job.result() for job in tqdm(jobs)]  # Wait for the jobs to finish
-
-# Sentence tokenization
-# with log_action('Tokenizing sentences'):
-#     executor = get_executor(
-#         cluster=cluster,
-#         slurm_partition=slurm_partition,
-#         timeout_min=2 * 60,
-#         slurm_array_parallelism=slurm_array_parallelism,
-#     )
-#     subshard_paths = get_subshard_paths(raw_original_dir)
-#     jobs = []
-#     with executor.batch():
-#         for i, subshard_path in enumerate(subshard_paths):
-#             sentences_path = dataset_dir / 'sentences' / f'{i:06d}.txt.gz'
-#             if sentences_path.exists():
-#                 continue
-#             sentences_path.parent.mkdir(exist_ok=True, parents=True)
-#             # Should take a bit less than 10 minutes each
-#             job = executor.submit(sentence_tokenize_subshard, subshard_path, sentences_path, language)
-#             jobs.append(job)
-#     print([job.job_id for job in jobs])
-#     [job.result() for job in tqdm(jobs)]
+slurm_array_parallelism = 32
 
 embeddings_type_name = f'laser_{language}'
 get_embeddings = lambda sentences: get_laser_embeddings(
