@@ -47,7 +47,7 @@ slurm_array_parallelism = 16
 
 embeddings_type_name = f'laser_{language}'
 get_embeddings = lambda sentences: get_laser_embeddings(
-    sentences, max_tokens=3000, language=language, n_encoding_jobs=10
+    sentences, max_tokens=1024, language=language, n_encoding_jobs=16
 )  # noqa: E731
 
 # Create base index
