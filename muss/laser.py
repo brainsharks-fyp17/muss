@@ -32,7 +32,7 @@ def get_laser_embeddings(
     from text_processing import Token, BPEfastApply  # noqa: E402
 
     def get_laser_encoder(encoder_path, max_tokens=12000):
-        return SentenceEncoder(encoder_path, max_sentences=None, max_tokens=max_tokens, cpu=False)
+        return SentenceEncoder(encoder_path, max_tokens=max_tokens, cpu=False, verbose=True)
 
     def encode_file(input_filepath, output_filepath, language, bpe_codes_path):
         #tokenized_filepath = get_temp_filepath()
