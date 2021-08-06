@@ -414,8 +414,9 @@ def write_pairs_to_file(pairs, filepath):
 
 def yield_pairs_from_file(filepath):
     for line in yield_lines(filepath):
-        complex_sentence, simple_sentence = line.split('\t')
-        yield (complex_sentence, simple_sentence)
+        sentences = line.split('\t')
+        if len(sentences) >= 2:
+            yield (sentences[0], sentences[1])
 
 
 def get_pairs_from_file(filepath):
