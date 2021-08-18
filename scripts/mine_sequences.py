@@ -80,7 +80,7 @@ with log_action('Computing embeddings'):
     executor = get_executor(
         cluster=cluster,
         slurm_partition=slurm_partition,
-        timeout_min=2 * 60,
+        timeout_min=60 * 60,
         slurm_array_parallelism=slurm_array_parallelism,
     )
     jobs = []
@@ -105,7 +105,7 @@ with log_action('Mining paraphrases'):
     executor = get_executor(
         cluster=cluster,
         slurm_partition=slurm_partition,
-        timeout_min=2 * 60,
+        timeout_min=60 * 60,
         slurm_array_parallelism=slurm_array_parallelism,
     )
     jobs = []
@@ -166,7 +166,7 @@ with log_action('Filtering candidate paraphrases'):
     executor = get_executor(
         cluster=cluster,
         slurm_partition=slurm_partition,
-        timeout_min=2 * 60,
+        timeout_min=60 * 60,
         slurm_array_parallelism=slurm_array_parallelism,
     )
     with executor.batch():
