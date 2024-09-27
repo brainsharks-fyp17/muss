@@ -27,11 +27,11 @@ from muss.utils.helpers import print_running_time, add_dicts
 def check_dataset(dataset):
     # Sanity check with evaluation dataset
     if has_lines_in_common(
-        get_data_filepath(dataset, 'train', 'complex'), get_data_filepath('asset', 'valid', 'complex')
+        get_data_filepath(dataset, 'train', 'complex'), get_data_filepath('newsela', 'valid', 'complex')
     ):
         warnings.warn('WARNING: Dataset has validation samples in training set!')
     if has_lines_in_common(
-        get_data_filepath(dataset, 'train', 'complex'), get_data_filepath('asset', 'test', 'complex')
+        get_data_filepath(dataset, 'train', 'complex'), get_data_filepath('newsela', 'test', 'complex')
     ):
         warnings.warn('WARNING: Dataset has test samples in training set!')
 
@@ -59,6 +59,7 @@ def fairseq_prepare_and_train(dataset, **kwargs):
     kwargs = check_and_resolve_args(kwargs)
     exp_dir = prepare_exp_dir()
     preprocessors_kwargs = kwargs.get('preprocessors_kwargs', {})
+    print(preprocessors_kwargs)
     preprocessors = get_preprocessors(preprocessors_kwargs)
     if len(preprocessors) > 0:
         dataset = create_preprocessed_dataset(dataset, preprocessors, n_jobs=8)
@@ -106,7 +107,7 @@ def fairseq_evaluate_and_save(exp_dir, **kwargs):
     shutil.move(get_easse_report_from_exp_dir(exp_dir, **kwargs), report_path)
     print(f'report_path={report_path}')
     predict_files = kwargs.get(
-        'predict_files', [get_data_filepath('asset', 'valid', 'complex'), get_data_filepath('asset', 'test', 'complex')]
+        'predict_files', [get_data_filepath('newsela', 'valid', 'complex'), get_data_filepath('newsela', 'test', 'complex')]
     )
     for source_path in predict_files:
         pred_path = get_predictions(source_path, exp_dir, **kwargs)
@@ -180,6 +181,8 @@ def get_language_from_dataset(dataset):
         return 'es'
     if '_it_' in dataset:
         return 'it'
+    if 'newsela' in dataset:
+        return 'si'
     else:
         return 'en'
 
@@ -190,6 +193,7 @@ def get_datasets_for_language(language):
         'en': ['asset', 'turkcorpus_detokenized'],
         'fr': ['alector'],
         'es': ['simplext_corpus_all_fixed'],
+        'si': ['newsela'],
         # 'it': ['simpitiki']
     }[language]
 
